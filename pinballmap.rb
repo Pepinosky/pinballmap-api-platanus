@@ -22,7 +22,7 @@ class Regions
              region_names= Hash.new
              regions= pinball_api.regions["regions"]
              regions.each do |region|
-             region_names["region_names"]= {region_name: region["name"]}
+                region_names["region_name_#{i}"]= "#{region["name"]}"
                 if i >= n
                 return region_names
                 end
@@ -33,51 +33,24 @@ class Regions
 end
 
 class Locations
-    def get_locations_from_region(region_name)
+    def get_locations_from_region(region_names)
         locations= PinballMap.new
-       pp locations.locations(region_name)
-        # region_name.each do |location|
-        #     locations          
-        # end
+        region_names.values.each do |region_name|         
+          location= locations.locations(region_name)["locations"]
+            location.each do |l|
+                pp l
+            end    
+        end
 
     end
 end
 
   region_name = Regions.new
-#   locations= Locations.new
-#   locations.get_locations_by_region( region_name.get_first_n_regions_name(2))
-  rm= region_name.get_first_n_regions_name(2)
-  pp rm
-  
+  locations= Locations.new
 
-  
-    # pinball_api = PinballMap.new
-    # regions= pinball_api.regions["regions"]
-    # regions.each do |region|
-    #  pp region["name"]
-    #  end
-#    region_name = regions[0]["name"]
-#    pp region_name
+  pp region_name.get_first_n_regions_name(1)
+  locations.get_locations_from_region(region_name.get_first_n_regions_name(2)) 
  
-#   region_names = Array.new(regions.length.to_i)
-# total_machine = 0
-#     regions.each do |region|
-#         locations= pinball_api.locations(region_name)
-#           location= locations["locations"]
-        
-#           location.each do |l|
-#               total_machine = total_machine + l["num_machines"]
-            
-#          end
-#      end
-   # pp location.length
-    
-        
-    #    pp locations["locations"][0]
-    
-    #  end
-
-#   pp region_names
 
 
 
