@@ -98,13 +98,14 @@ class Locations
         region_names.values.each do |region_name|         
             location= locations.locations(region_name)["locations"]       
             location.each do |l|
+                location_with_less_machines_count= l["num_machines"]
               if l["num_machines"] <= location_with_less_machines_count 
                 location_with_less_machines_count= l["num_machines"]
                 location_with_less_machines_name = l["name"]
               end 
             end  
         end
-        return location_with_less_machines_count
+        return location_with_less_machines_name
           
     end  
     
@@ -112,37 +113,20 @@ class Locations
 end
 
 
-# class Machines
-#     def get_machine_total_all_locations(all_locations)
-#          total_machine = 0
-#            location= locations["locations"]
-        
-#           location.each do |l|
-#                total_machine = total_machine + l["num_machines"]
-            
-#           end
-      
-#     end    
-# end    
 
   region = Regions.new
   locations= Locations.new
-  #count= PinballMap.new
-
-  
-  #conseguir las primeras n region names para poder obtener todas las location(ubicaciones) que tiene 
   region_names = region.get_first_n_regions_name(1)
   all_locations = locations.get_locations_from_region(region_names)
   total_machines= locations.get_locations_machines(region_names)
   locations_total = locations.get_locations_number(all_locations)
   average_machines = total_machines/locations_total
-  #locations.get_locations_with_more_machines(all_locations)  
-  #locations_with_more_machines= 
+  
   location_with_more_machines = locations.get_locations_with_more_machines(region_names)
   location_with_less_machines = locations.get_locations_with_less_machines(region_names)
- #pp locations_with_more_machines 
+
   
-   
+   pp "estadísticas:"
    pp "total de locations: #{locations_total}" 
    pp "cantidad de maquinas: #{total_machines}"
    pp "promedio de maquinas: #{average_machines.to_f}"
